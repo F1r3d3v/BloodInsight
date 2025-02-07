@@ -1,6 +1,6 @@
 name: blood_insight
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -11,9 +11,25 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_native_splash: ^2.4.4
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+
+flutter_native_splash:
+  color: "#f0ff5d"
+  image: assets/splashscreen/splash.png
+  branding: "assets/splashscreen/splash_brand.png"
+  branding_bottom_padding: 36
+  android_12:
+    color: "#f0ff5d"
+    image: assets/splashscreen/android12splash.png
+    branding: assets/splashscreen/splash_brand.png
+  ios: false
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/images/
