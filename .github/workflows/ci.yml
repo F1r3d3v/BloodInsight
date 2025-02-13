@@ -1,0 +1,52 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - master
+      - dev
+
+jobs:
+  flutter_test:
+    name: Run flutter test and analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Environment
+        uses: ./.github/actions/env_setup
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze project source
+        run: flutter analyze --fatal-warnings
+
+      - name: Run tests
+        run: flutter test
+
+  flutter_build_android:
+    name: Build Android
+    needs: flutter_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Environment
+        uses: ./.github/actions/env_setup
+
+      - name: Build Android APK
+        run: flutter build apk
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BloodInsight-Apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+      - name: Build Android App Bundle
+        run: flutter build appbundle
+
+      - name: Upload Bundle Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BloodInsight-AppBundle
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error

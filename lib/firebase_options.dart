@@ -66,5 +66,4 @@ class DefaultFirebaseOptions {
     projectId: 'bloodinsight-f1r3d3v',
     storageBucket: 'bloodinsight-f1r3d3v.firebasestorage.app',
   );
-
 }

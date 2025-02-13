@@ -1,0 +1,22 @@
+name: Setup Environment
+description: Setup environment for Flutter project
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: "21.x"
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: "stable"
+        flutter-version: 3.27.4
+
+    - name: Install dependencies
+      run: flutter pub get
