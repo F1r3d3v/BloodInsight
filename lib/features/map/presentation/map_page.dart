@@ -2,18 +2,33 @@ import 'package:bloodinsight/core/styles/sizes.dart';
 import 'package:bloodinsight/core/styles/style.dart';
 import 'package:bloodinsight/features/map/data/facility_model.dart';
 import 'package:bloodinsight/features/map/logic/map_cubit.dart';
+import 'package:bloodinsight/shared/services/facility_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapPage extends StatefulWidget {
+class MapPage extends StatelessWidget {
   const MapPage({super.key});
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MapCubit(
+        context.read<FacilityService>(),
+      ),
+      child: const MapView(),
+    );
+  }
 }
 
-class _MapPageState extends State<MapPage> {
+class MapView extends StatefulWidget {
+  const MapView({super.key});
+
+  @override
+  State<MapView> createState() => _MapViewState();
+}
+
+class _MapViewState extends State<MapView> {
   GoogleMapController? _mapController;
 
   final DraggableScrollableController _sheetController =
@@ -197,19 +212,17 @@ class _MapPageState extends State<MapPage> {
                           ),
                         ),
                         IgnorePointer(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.symmetric(vertical: 8),
-                                width: 40,
-                                height: 4,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              width: 40,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(2),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
@@ -272,46 +285,59 @@ class _FacilityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: Sizes.kPaddH12,
-      child: ListTile(
-        onTap: onTap,
-        leading: Icon(
-          facility.type == 'hospital'
-              ? Icons.local_hospital
-              : facility.type == 'clinic'
-                  ? Icons.medical_services
-                  : facility.type == 'laboratory'
-                      ? Icons.science
-                      : Icons.location_pin,
-          color: Theme.of(context).colorScheme.secondary,
+      margin: Sizes.kPaddH16,
+      elevation: 5,
+      shadowColor: Colors.black.withValues(alpha: 0.5),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          highlightColor:
+              Theme.of(context).highlightColor.withValues(alpha: 0.1),
         ),
-        title: Text(
-          facility.name,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(facility.address),
-            Row(
+        child: Material(
+          color: Colors.transparent,
+          clipBehavior: Clip.hardEdge,
+          borderRadius: Sizes.kRadius12,
+          child: ListTile(
+            onTap: onTap,
+            leading: Icon(
+              facility.type == 'hospital'
+                  ? Icons.local_hospital
+                  : facility.type == 'clinic'
+                      ? Icons.medical_services
+                      : facility.type == 'laboratory'
+                          ? Icons.science
+                          : Icons.location_pin,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            title: Text(
+              facility.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.star,
-                  size: 16,
-                  color: Colors.amber,
-                ),
-                Text(' ${facility.rating}'),
-                const Spacer(),
-                Text(
-                  facility.isOpen ? 'Open' : 'Closed',
-                  style: TextStyle(
-                    color: facility.isOpen ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.w500,
-                  ),
+                Text(facility.address),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star,
+                      size: 16,
+                      color: Colors.amber,
+                    ),
+                    Text(' ${facility.rating}'),
+                    const Spacer(),
+                    Text(
+                      facility.isOpen ? 'Open' : 'Closed',
+                      style: TextStyle(
+                        color: facility.isOpen ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

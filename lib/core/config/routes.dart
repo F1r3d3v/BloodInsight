@@ -29,7 +29,6 @@ Future<String> getInitialRoute() async {
 
 Future<GoRouter> createRouter() async {
   final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
-  final tabNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'tabNav');
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -78,47 +77,61 @@ Future<GoRouter> createRouter() async {
           ),
         ],
       ),
-      ShellRoute(
-        navigatorKey: tabNavigatorKey,
-        builder: (context, state, child) => ScaffoldWithNavBar(
-          location: state.uri.toString(),
-          child: child,
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => ScaffoldWithNavBar(
+          navigationShell: navigationShell,
         ),
-        routes: [
-          GoRoute(
-            path: '/dashboard',
-            builder: (context, state) => const DashboardPage(),
-          ),
-          GoRoute(
-            path: '/insights',
-            builder: (context, state) => const InsightsPage(),
-          ),
-          GoRoute(
-            path: '/map',
-            builder: (context, state) => const MapPage(),
-          ),
-          GoRoute(
-            path: '/bloodwork',
-            builder: (context, state) => const BloodworkHistoryPage(),
+        branches: [
+          StatefulShellBranch(
             routes: [
               GoRoute(
-                parentNavigatorKey: rootNavigatorKey,
-                path: '/add',
-                builder: (context, state) => const AddBloodworkPage(),
+                path: '/dashboard',
+                builder: (context, state) => const DashboardPage(),
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
               GoRoute(
-                parentNavigatorKey: rootNavigatorKey,
-                path: '/:id/edit',
-                builder: (context, state) => AddBloodworkPage(
-                  bloodworkId: state.pathParameters['id'],
-                ),
+                path: '/bloodwork',
+                builder: (context, state) => const BloodworkHistoryPage(),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: rootNavigatorKey,
+                    path: '/add',
+                    builder: (context, state) => const AddBloodworkPage(),
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: rootNavigatorKey,
+                    path: '/:id/edit',
+                    builder: (context, state) => AddBloodworkPage(
+                      bloodworkId: state.pathParameters['id'],
+                    ),
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: rootNavigatorKey,
+                    path: '/:id',
+                    builder: (context, state) => BloodworkDetailsPage(
+                      bloodworkId: state.pathParameters['id']!,
+                    ),
+                  ),
+                ],
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
               GoRoute(
-                parentNavigatorKey: rootNavigatorKey,
-                path: '/:id',
-                builder: (context, state) => BloodworkDetailsPage(
-                  bloodworkId: state.pathParameters['id']!,
-                ),
+                path: '/insights',
+                builder: (context, state) => const InsightsPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/map',
+                builder: (context, state) => const MapPage(),
               ),
             ],
           ),

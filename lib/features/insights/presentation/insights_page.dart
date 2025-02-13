@@ -55,71 +55,66 @@ class InsightsView extends StatelessWidget {
   Widget _buildInitialState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: Sizes.kPadd20,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: Sizes.kPadd20,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: Sizes.kRadius16,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+        padding: Sizes.kPadd16,
+        child: Container(
+          padding: Sizes.kPadd20,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: Sizes.kRadius16,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.analytics_outlined,
-                    size: 64,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Sizes.kGap20,
-                  Text(
-                    'Get Your Health Insights',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Sizes.kGap10,
-                  Text(
-                    'Generate a comprehensive health report based on your latest bloodwork results',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: 0.7),
-                          height: 1.4,
-                        ),
-                  ),
-                  Sizes.kGap25,
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        context.read<InsightsCubit>().generateInsights();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      icon: const Icon(Icons.analytics),
-                      label: const Text('Generate Report'),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.analytics_outlined,
+                size: 64,
+                color: Theme.of(context).primaryColor,
+              ),
+              Sizes.kGap20,
+              Text(
+                'Get Your Health Insights',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              Sizes.kGap10,
+              Text(
+                'Generate a comprehensive health report based on your latest bloodwork results',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: 0.7),
+                      height: 1.4,
+                    ),
+              ),
+              Sizes.kGap25,
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    context.read<InsightsCubit>().generateInsights();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ],
+                  icon: const Icon(Icons.analytics),
+                  label: const Text('Generate Report'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

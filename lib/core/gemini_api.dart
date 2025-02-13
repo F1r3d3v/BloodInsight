@@ -15,8 +15,8 @@ class GeminiAPI {
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
       return response.text ?? '';
-    } catch (e) {
-      throw Exception('Error generating content: $e');
+    } catch (err) {
+      throw Exception('Error generating content: $err');
     }
   }
 
@@ -49,11 +49,11 @@ class GeminiAPI {
 
       try {
         return jsonDecode(forrmatted) as Map<String, dynamic>;
-      } catch (e) {
+      } catch (err) {
         throw Exception('Response is not valid JSON: $text');
       }
-    } catch (e) {
-      throw Exception('Error generating content: $e');
+    } catch (err) {
+      throw Exception('Error generating content: $err');
     }
   }
 }

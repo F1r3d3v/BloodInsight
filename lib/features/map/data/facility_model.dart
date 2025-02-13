@@ -27,7 +27,7 @@ class MedicalFacility {
           '',
       location: LatLng(location.lat, location.lng),
       placeId: place['place_id'].toString(),
-      rating: (place['rating'] as num?)?.toDouble(),
+      rating: (place['rating'] as num?)?.toDouble() ?? 0.0,
       isOpen: (place['opening_hours'] as OpeningHoursDetail?)?.openNow ?? false,
       photoReference:
           (place['photos'] as List<Photo>).firstOrNull?.photoReference ?? '',

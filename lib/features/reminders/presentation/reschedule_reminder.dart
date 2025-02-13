@@ -48,9 +48,9 @@ class _RescheduleReminderPageState extends State<RescheduleReminderPage> {
         _isFasting = reminder.isFasting;
         _isLoading = false;
       });
-    } catch (e) {
+    } catch (err) {
       setState(() {
-        _error = e.toString();
+        _error = err.toString();
         _isLoading = false;
       });
     }
@@ -84,7 +84,7 @@ class _RescheduleReminderPageState extends State<RescheduleReminderPage> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: Sizes.kPadd20,
+        padding: Sizes.kPadd16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -385,9 +385,9 @@ class _RescheduleReminderPageState extends State<RescheduleReminderPage> {
           ..showSnackBar('Reminder updated successfully')
           ..pop();
       }
-    } catch (e) {
+    } catch (err) {
       if (mounted) {
-        context.showSnackBar('Error: $e', isError: true);
+        context.showSnackBar('Error: $err', isError: true);
       }
     }
   }

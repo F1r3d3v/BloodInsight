@@ -1,3 +1,4 @@
+import 'package:bloodinsight/core/connectivity_status.dart';
 import 'package:bloodinsight/core/styles/sizes.dart';
 import 'package:bloodinsight/core/styles/style.dart';
 import 'package:bloodinsight/features/auth/logic/auth_cubit.dart';
@@ -5,6 +6,7 @@ import 'package:bloodinsight/features/user_profile/data/user_profile_model.dart'
 import 'package:bloodinsight/shared/services/auth_service.dart';
 import 'package:bloodinsight/shared/services/user_profile_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
           }
 
           return SingleChildScrollView(
-            padding: Sizes.kPadd20,
+            padding: Sizes.kPadd16,
             child: Column(
               children: [
                 _buildProfileHeader(context, profile),
@@ -79,8 +81,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 _buildHealthMetrics(context, profile, profileService),
                 Sizes.kGap30,
                 _buildPersonalInfo(context, profile),
-                Sizes.kGap40,
+                Sizes.kGap20,
                 _buildSignOutButton(context, authCubit),
+                Sizes.kGap20,
               ],
             ),
           );
@@ -90,14 +93,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildProfileHeader(BuildContext context, UserProfile profile) {
+    final isConnected = GetIt.I<ConnectionStatus>().hasConnection;
+    final showOfflineBanner =
+        !isConnected || (isConnected && profile.photoUrl == null);
     return Column(
       children: [
         CircleAvatar(
           radius: 50,
           backgroundColor: Theme.of(context).primaryColor,
           backgroundImage:
-              profile.photoUrl != null ? NetworkImage(profile.photoUrl!) : null,
-          child: profile.photoUrl == null
+              showOfflineBanner ? null : NetworkImage(profile.photoUrl!),
+          child: showOfflineBanner
               ? Text(
                   profile.name[0].toUpperCase(),
                   style: const TextStyle(
@@ -290,20 +296,23 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildSignOutButton(BuildContext context, AuthCubit authCubit) {
     return SizedBox(
       width: double.infinity,
-      child: OutlinedButton.icon(
-        onPressed: () async {
-          await authCubit.signOut();
-          if (context.mounted) {
-            context.go('/login');
-          }
-        },
-        icon: const Icon(Icons.logout),
-        label: const Text('Sign Out'),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          side: BorderSide(color: Theme.of(context).primaryColor),
-          shape: RoundedRectangleBorder(
-            borderRadius: Sizes.kRadius12,
+      child: Padding(
+        padding: Sizes.kPaddH20,
+        child: OutlinedButton.icon(
+          onPressed: () async {
+            await authCubit.signOut();
+            if (context.mounted) {
+              context.go('/login');
+            }
+          },
+          icon: const Icon(Icons.logout),
+          label: const Text('Sign Out'),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            side: BorderSide(color: Theme.of(context).primaryColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: Sizes.kRadius12,
+            ),
           ),
         ),
       ),

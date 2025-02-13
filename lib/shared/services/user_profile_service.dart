@@ -34,10 +34,10 @@ class ProfileService {
           ),
         ),
       );
-    } catch (e) {
+    } catch (err) {
       throw FirebaseException(
         plugin: 'firestore',
-        message: 'Failed to update profile: $e',
+        message: 'Failed to update profile: $err',
       );
     }
   }
@@ -52,10 +52,10 @@ class ProfileService {
       }
 
       return UserProfile.fromJson(userId, doc.data()! as Map<String, dynamic>);
-    } catch (e) {
+    } catch (err) {
       throw FirebaseException(
         plugin: 'firestore',
-        message: 'Failed to fetch profile: $e',
+        message: 'Failed to fetch profile: $err',
       );
     }
   }
@@ -77,10 +77,10 @@ class ProfileService {
   ) async {
     try {
       unawaited(_wrapper(() => getUserProfileRef(userId).update(fields)));
-    } catch (e) {
+    } catch (err) {
       throw FirebaseException(
         plugin: 'firestore',
-        message: 'Failed to update profile fields: $e',
+        message: 'Failed to update profile fields: $err',
       );
     }
   }
@@ -89,10 +89,10 @@ class ProfileService {
   Future<void> deleteProfile(String userId) async {
     try {
       unawaited(_wrapper(() => getUserProfileRef(userId).delete()));
-    } catch (e) {
+    } catch (err) {
       throw FirebaseException(
         plugin: 'firestore',
-        message: 'Failed to delete profile: $e',
+        message: 'Failed to delete profile: $err',
       );
     }
   }

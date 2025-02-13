@@ -56,39 +56,46 @@ class BloodworkDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            padding: Sizes.kPadd16,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSummaryCard(context, bloodwork),
-                Sizes.kGap20,
-                ...BloodMarkerCategory.values.map((category) {
-                  final markersCategory =
-                      bloodwork.getMarkersByCategory(category);
-                  if (markersCategory.isEmpty) {
-                    return Sizes.kEmptyWidget;
-                  }
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        category.displayName,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                      Sizes.kGap10,
-                      _buildMarkersCard(context, markersCategory),
+          body: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: Sizes.kPadd16,
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      _buildSummaryCard(context, bloodwork),
                       Sizes.kGap20,
+                      ...BloodMarkerCategory.values.map((category) {
+                        final markersCategory =
+                            bloodwork.getMarkersByCategory(category);
+                        if (markersCategory.isEmpty) {
+                          return Sizes.kEmptyWidget;
+                        }
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              category.displayName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Sizes.kGap10,
+                            _buildMarkersCard(context, markersCategory),
+                            Sizes.kGap20,
+                          ],
+                        );
+                      }),
+                      Sizes.kGap40,
                     ],
-                  );
-                }),
-                Sizes.kGap40,
-              ],
-            ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -148,30 +155,23 @@ class BloodworkDetailsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat('EEEE, MMMM d, y')
-                        .format(bloodwork.dateCollected),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Sizes.kGap5,
-                  Text(
-                    bloodwork.labName,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color:
-                          Theme.of(context).primaryColor.withValues(alpha: 0.7),
-                    ),
-                  ),
-                ],
+              Text(
+                DateFormat('EEEE, MMMM d, y').format(bloodwork.dateCollected),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Sizes.kGap5,
+              Text(
+                bloodwork.labName,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.7),
+                ),
               ),
             ],
           ),

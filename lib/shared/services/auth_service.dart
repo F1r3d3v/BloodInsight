@@ -126,7 +126,7 @@ class AuthService {
         default:
           rethrow;
       }
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }

@@ -35,7 +35,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: Sizes.kPadd20,
+        padding: Sizes.kPadd16,
         child: Form(
           key: _formKey,
           child: Column(
@@ -357,9 +357,9 @@ class _AddReminderPageState extends State<AddReminderPage> {
           ..showSnackBar('Reminder added successfully')
           ..pop();
       }
-    } catch (e) {
+    } catch (err) {
       if (mounted) {
-        context.showSnackBar('Error: $e', isError: true);
+        context.showSnackBar('Error: $err', isError: true);
       }
     }
   }

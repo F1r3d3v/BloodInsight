@@ -45,6 +45,7 @@ class Sizes {
   static const kPaddH8 = EdgeInsets.symmetric(horizontal: 8);
   static const kPaddH10 = EdgeInsets.symmetric(horizontal: 10);
   static const kPaddH12 = EdgeInsets.symmetric(horizontal: 12);
+  static const kPaddH16 = EdgeInsets.symmetric(horizontal: 16);
   static const kPaddH20 = EdgeInsets.symmetric(horizontal: 20);
   static const kPaddH25 = EdgeInsets.symmetric(horizontal: 25);
   static const kPaddH30 = EdgeInsets.symmetric(horizontal: 30);

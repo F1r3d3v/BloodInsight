@@ -55,8 +55,8 @@ class MapCubit extends Cubit<MapState> {
       );
 
       await searchNearbyFacilities();
-    } catch (e) {
-      emit(state.copyWith(error: e.toString()));
+    } catch (err) {
+      emit(state.copyWith(error: err.toString()));
     }
   }
 
@@ -79,10 +79,10 @@ class MapCubit extends Cubit<MapState> {
           isLoading: false,
         ),
       );
-    } catch (e) {
+    } catch (err) {
       emit(
         state.copyWith(
-          error: e.toString(),
+          error: err.toString(),
           facilitiesUpdated: false,
           isLoading: false,
         ),
@@ -110,10 +110,10 @@ class MapCubit extends Cubit<MapState> {
           isLoading: false,
         ),
       );
-    } catch (e) {
+    } catch (err) {
       emit(
         state.copyWith(
-          error: e.toString(),
+          error: err.toString(),
           facilitiesUpdated: false,
           isLoading: false,
         ),

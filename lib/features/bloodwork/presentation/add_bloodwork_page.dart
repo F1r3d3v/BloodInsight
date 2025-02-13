@@ -69,9 +69,9 @@ class _AddBloodworkPageState extends State<AddBloodworkPage> {
             ),
           );
       });
-    } catch (e) {
+    } catch (err) {
       if (mounted) {
-        context.showSnackBar('Error loading bloodwork: $e', isError: true);
+        context.showSnackBar('Error loading bloodwork: $err', isError: true);
       }
     } finally {
       if (mounted) {
@@ -112,48 +112,45 @@ class _AddBloodworkPageState extends State<AddBloodworkPage> {
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: Sizes.kPadd20,
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoCard(),
-                      Sizes.kGap20,
-                      Text(
-                        'Blood Markers',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Sizes.kGap20,
-                      ..._markers.map(_buildMarkerCard),
-                      Center(
-                        child: OutlinedButton.icon(
-                          onPressed: _addMarker,
-                          icon: const Icon(Icons.add),
-                          label: const Text('Add Another Marker'),
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 12,
-                            ),
+      body: Form(
+        key: _formKey,
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: Sizes.kPadd16,
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    _buildInfoCard(),
+                    Sizes.kGap20,
+                    Text(
+                      'Blood Markers',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Sizes.kGap20,
+                    ..._markers.map(_buildMarkerCard),
+                    Center(
+                      child: OutlinedButton.icon(
+                        onPressed: _addMarker,
+                        icon: const Icon(Icons.add),
+                        label: const Text('Add Another Marker'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
                           ),
                         ),
                       ),
-                      Sizes.kGap20,
-                    ],
-                  ),
+                    ),
+                    Sizes.kGap20,
+                  ],
                 ),
-              ]),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -428,9 +425,9 @@ class _AddBloodworkPageState extends State<AddBloodworkPage> {
             )
             ..pop();
         }
-      } catch (e) {
+      } catch (err) {
         if (mounted) {
-          context.showSnackBar('Error saving bloodwork: $e', isError: true);
+          context.showSnackBar('Error saving bloodwork: $err', isError: true);
         }
       }
     }

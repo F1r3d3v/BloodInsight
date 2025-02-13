@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:bloodinsight/core/config/constants.dart';
 import 'package:bloodinsight/core/styles/colors.dart';
 import 'package:bloodinsight/core/styles/sizes.dart';
 import 'package:bloodinsight/core/styles/style.dart';
@@ -21,10 +24,22 @@ class DashboardPage extends StatefulWidget {
 }
 
 class DashboardPageState extends State<DashboardPage> {
+  late final List<Map<String, dynamic>> _selectedTips;
+
   @override
   void initState() {
     super.initState();
     _prefetchProfileImage();
+    _selectedTips = _getRandomTips();
+  }
+
+  List<Map<String, dynamic>> _getRandomTips() {
+    final random = Random(
+      DateTime.now().millisecondsSinceEpoch,
+    );
+    final tips = List<Map<String, dynamic>>.from(HealthTips.tips)
+      ..shuffle(random);
+    return tips.take(3).toList();
   }
 
   Future<void> _prefetchProfileImage() async {
@@ -79,7 +94,7 @@ class DashboardPageState extends State<DashboardPage> {
           final userName = profile?.name;
 
           return SingleChildScrollView(
-            padding: Sizes.kPadd20,
+            padding: Sizes.kPadd16,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -222,10 +237,10 @@ class DashboardPageState extends State<DashboardPage> {
                                   try {
                                     await reminderService
                                         .deleteReminder(reminder.id);
-                                  } catch (e) {
+                                  } catch (err) {
                                     if (context.mounted) {
                                       context.showSnackBar(
-                                        'Error canceling reminder: $e',
+                                        'Error canceling reminder: $err',
                                         isError: true,
                                       );
                                     }
@@ -366,22 +381,17 @@ class DashboardPageState extends State<DashboardPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTip(
-                        context,
-                        icon: Icons.water_drop,
-                        tip: 'Stay hydrated before your next blood test',
-                      ),
-                      Sizes.kGap15,
-                      _buildTip(
-                        context,
-                        icon: Icons.restaurant,
-                        tip: 'Fast for 8-12 hours before the test',
-                      ),
-                      Sizes.kGap15,
-                      _buildTip(
-                        context,
-                        icon: Icons.medication,
-                        tip: 'Bring a list of your current medications',
+                      ..._selectedTips.map(
+                        (tip) => Column(
+                          children: [
+                            _buildTip(
+                              context,
+                              icon: tip['icon'] as IconData,
+                              tip: tip['tip'] as String,
+                            ),
+                            if (tip != _selectedTips.last) Sizes.kGap15,
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -29,12 +29,11 @@ extension ScaffoldStateExtension on BuildContext {
 class ScaffoldWithNavBar extends StatefulWidget {
   const ScaffoldWithNavBar({
     super.key,
-    required this.child,
-    required this.location,
+    required this.navigationShell,
   });
 
-  final Widget child;
-  final String location;
+  // final Widget child;
+  final StatefulNavigationShell navigationShell;
   static const FloatingActionButtonLocation centerDocked =
       _CenterDockedFloatingActionButtonLocation();
 
@@ -61,21 +60,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
     }
   }
 
-  int _getCurrentIndex(String location) {
-    switch (location) {
-      case '/dashboard':
-        return 0;
-      case '/bloodwork':
-        return 1;
-      case '/insights':
-        return 2;
-      case '/map':
-        return 3;
-      default:
-        return 0;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +69,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       floatingActionButton: Visibility(
         visible: _isNavBarVisible,
         child: Hero(
-          tag: 'addButton${widget.location}',
+          tag: 'addButton',
           child: GestureDetector(
             onTap: () => _showAddBottomSheet(context),
             child: Container(
@@ -113,11 +97,9 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       ),
       bottomNavigationBar: Visibility(
         visible: _isNavBarVisible,
-        child: FloatingBottomNavBar(
-          currentIndex: _getCurrentIndex(widget.location),
-        ),
+        child: FloatingBottomNavBar(navigationShell: widget.navigationShell),
       ),
-      body: widget.child,
+      body: widget.navigationShell,
     );
   }
 

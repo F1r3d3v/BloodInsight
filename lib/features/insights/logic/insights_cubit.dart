@@ -25,8 +25,8 @@ class InsightsCubit extends Cubit<InsightsState> {
       emit(const InsightsState.loading());
       final insights = await _insightsService.generateHealthInsights();
       emit(InsightsState.loaded(insights));
-    } catch (e) {
-      emit(InsightsState.error(e.toString()));
+    } catch (err) {
+      emit(InsightsState.error(err.toString()));
     }
   }
 }

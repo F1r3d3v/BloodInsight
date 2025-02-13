@@ -77,10 +77,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ..showSnackBar('Profile updated succesfully')
           ..pop();
       }
-    } catch (e) {
+    } catch (err) {
       if (context.mounted) {
         context.showSnackBar(
-          'Error updating profile: $e',
+          'Error updating profile: $err',
           isError: true,
           duration: const Duration(seconds: 5),
         );

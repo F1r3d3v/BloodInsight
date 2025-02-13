@@ -5,7 +5,6 @@ import 'package:bloodinsight/core/notification_service.dart';
 import 'package:bloodinsight/core/styles/assets.dart';
 import 'package:bloodinsight/core/styles/theme.dart';
 import 'package:bloodinsight/features/auth/logic/auth_cubit.dart';
-import 'package:bloodinsight/features/map/logic/map_cubit.dart';
 import 'package:bloodinsight/firebase_options.dart';
 import 'package:bloodinsight/shared/services/auth_service.dart';
 import 'package:bloodinsight/shared/services/bloodwork_service.dart';
@@ -115,11 +114,6 @@ class MainApp extends StatelessWidget {
           create: (context) => AuthCubit(
             authService: context.read(),
             profileService: context.read(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => MapCubit(
-            context.read(),
           ),
         ),
       ],

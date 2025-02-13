@@ -7,10 +7,17 @@ import 'package:go_router/go_router.dart';
 class FloatingBottomNavBar extends StatelessWidget {
   const FloatingBottomNavBar({
     super.key,
-    required this.currentIndex,
+    required this.navigationShell,
   });
 
-  final int currentIndex;
+  final StatefulNavigationShell navigationShell;
+
+  void _onTap(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +51,14 @@ class FloatingBottomNavBar extends StatelessWidget {
                       _NavBarItem(
                         icon: Icons.home_outlined,
                         label: 'Home',
-                        isSelected: currentIndex == 0,
-                        onTap: () => context.go('/dashboard'),
+                        isSelected: navigationShell.currentIndex == 0,
+                        onTap: () => _onTap(0),
                       ),
                       _NavBarItem(
                         icon: Icons.history_outlined,
                         label: 'History',
-                        isSelected: currentIndex == 1,
-                        onTap: () => context.go('/bloodwork'),
+                        isSelected: navigationShell.currentIndex == 1,
+                        onTap: () => _onTap(1),
                       ),
                     ],
                   ),
@@ -66,14 +73,14 @@ class FloatingBottomNavBar extends StatelessWidget {
                       _NavBarItem(
                         icon: Icons.analytics_outlined,
                         label: 'Insights',
-                        isSelected: currentIndex == 2,
-                        onTap: () => context.go('/insights'),
+                        isSelected: navigationShell.currentIndex == 2,
+                        onTap: () => _onTap(2),
                       ),
                       _NavBarItem(
                         icon: Icons.map_outlined,
                         label: 'Map',
-                        isSelected: currentIndex == 3,
-                        onTap: () => context.go('/map'),
+                        isSelected: navigationShell.currentIndex == 3,
+                        onTap: () => _onTap(3),
                       ),
                     ],
                   ),
