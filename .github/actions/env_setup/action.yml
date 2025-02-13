@@ -2,7 +2,7 @@ name: Setup Environment
 description: Setup environment for Flutter project
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Set up Java
       uses: actions/setup-java@v4
@@ -17,3 +17,4 @@ runs:
 
     - name: Install dependencies
       run: flutter pub get
+      shell: bash
