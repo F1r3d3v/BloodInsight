@@ -10,7 +10,10 @@ jobs:
     name: Run flutter test and analyze
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Environment
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup environment
         uses: ./.github/actions/env_setup
 
       - name: Verify formatting
@@ -28,7 +31,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup Environment
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup environment
         uses: ./.github/actions/env_setup
 
       - name: Build Android APK
