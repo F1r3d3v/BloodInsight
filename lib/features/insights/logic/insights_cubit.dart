@@ -29,4 +29,8 @@ class InsightsCubit extends Cubit<InsightsState> {
       emit(InsightsState.error(err.toString()));
     }
   }
+
+  void clearInsights() {
+    emit(const InsightsState.initial());
+  }
 }

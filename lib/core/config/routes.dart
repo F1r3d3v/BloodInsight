@@ -29,6 +29,8 @@ Future<String> getInitialRoute() async {
 
 Future<GoRouter> createRouter() async {
   final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
+  final bloodworkNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'bloodworkNav');
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -91,6 +93,7 @@ Future<GoRouter> createRouter() async {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: bloodworkNavigatorKey,
             routes: [
               GoRoute(
                 path: '/bloodwork',

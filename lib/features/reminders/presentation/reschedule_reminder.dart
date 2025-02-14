@@ -92,7 +92,7 @@ class _RescheduleReminderPageState extends State<RescheduleReminderPage> {
             Sizes.kGap20,
             _buildDateTimeSection(),
             Sizes.kGap20,
-            _buildNotesSection(),
+            if (_reminder.notes != null) _buildNotesSection(),
             Sizes.kGap20,
             _buildSubmitButton(),
             Sizes.kGap20,

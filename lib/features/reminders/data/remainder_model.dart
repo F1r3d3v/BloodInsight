@@ -15,7 +15,7 @@ class BloodworkReminder {
       labName: json['labName'].toString(),
       scheduledDate: (json['scheduledDate'] as Timestamp).toDate(),
       isFasting: json['isFasting'] as bool? ?? false,
-      notes: json['notes'].toString(),
+      notes: json['notes']?.toString(),
     );
   }
   final String id;

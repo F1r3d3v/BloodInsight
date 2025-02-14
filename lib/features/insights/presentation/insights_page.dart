@@ -176,7 +176,7 @@ class InsightsView extends StatelessWidget {
     ];
 
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
       itemCount: cards.length,
       separatorBuilder: (context, index) => Sizes.kGap20,
       itemBuilder: (context, index) => cards[index],
@@ -227,6 +227,7 @@ class InsightsView extends StatelessWidget {
   }
 
   Widget _buildBMICard(Map<String, dynamic> bmiAnalysis) {
+    final bmiColor = _getBMIStatusColor(bmiAnalysis['status'] as String);
     return _buildCard(
       title: 'BMI Analysis',
       icon: Icons.monitor_weight,
@@ -237,14 +238,13 @@ class InsightsView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: _getBMIStatusColor(bmiAnalysis['status'] as String)
-                  .withValues(alpha: 0.1),
+              color: bmiColor.withValues(alpha: 0.1),
               borderRadius: Sizes.kRadius8,
             ),
             child: Text(
               'Status: ${bmiAnalysis['status']}',
               style: TextStyle(
-                color: _getBMIStatusColor(bmiAnalysis['status'] as String),
+                color: bmiColor,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -282,9 +282,10 @@ class InsightsView extends StatelessWidget {
               final concernMap = concern as Map<String, dynamic>;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                    width: double.maxFinite,
+                    width: double.infinity,
                     child: Wrap(
                       alignment: WrapAlignment.spaceBetween,
                       children: [
@@ -295,7 +296,6 @@ class InsightsView extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Spacer(),
                         Text(
                           concern['value'] as String,
                         ),
@@ -445,7 +445,7 @@ class InsightsView extends StatelessWidget {
       child: FilledButton(
         onPressed: () {
           context
-            ..showBottomNav()
+            ..read<InsightsCubit>().clearInsights()
             ..go('/dashboard');
         },
         style: FilledButton.styleFrom(

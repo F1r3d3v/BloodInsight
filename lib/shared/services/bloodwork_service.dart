@@ -184,7 +184,7 @@ class BloodworkService {
   }
 
   // Stream bloodwork
-  Stream<Bloodwork> streamBloodwork(String bloodworkId) {
+  Stream<Bloodwork?> streamBloodwork(String bloodworkId) {
     return getBloodworkRef().doc(bloodworkId).snapshots().combineLatest(
         getBloodworkRef().doc(bloodworkId).collection('markers').snapshots(),
         (bloodworkDoc, markersSnapshot) {
@@ -201,6 +201,10 @@ class BloodworkService {
         );
       }).toList();
 
+      if (!bloodworkDoc.exists) {
+        return null;
+      }
+
       final bloodworkData = bloodworkDoc.data()! as Map<String, dynamic>;
       return Bloodwork(
         id: bloodworkDoc.id,
@@ -211,6 +215,20 @@ class BloodworkService {
     });
   }
 
+  // Stream latest bloodwork
+  Stream<Bloodwork?> streamLatestBloodwork() {
+    final bloodworkRef =
+        getBloodworkRef().orderBy('dateCollected', descending: true).limit(1);
+    return bloodworkRef.snapshots().switchMap(
+      (snapshot) {
+        if (snapshot.docs.isEmpty) {
+          return Stream.value(null);
+        }
+        return streamBloodwork(snapshot.docs.first.id);
+      },
+    );
+  }
+
   // Get all bloodwork for a user, messy but works
   Stream<List<Bloodwork>> streamUserBloodwork() {
     return getBloodworkRef().snapshots().switchMap((snapshot) {
@@ -219,7 +237,13 @@ class BloodworkService {
       }
 
       final streams = snapshot.docs
-          .map((doc) => streamBloodwork(doc.id).map((bloodwork) => [bloodwork]))
+          .map(
+            (doc) => streamBloodwork(doc.id)
+                .where((bloodwork) => bloodwork != null)
+                .map(
+                  (bloodwork) => [bloodwork!],
+                ),
+          )
           .toList();
 
       for (var i = 0; i < streams.length - 1; i++) {

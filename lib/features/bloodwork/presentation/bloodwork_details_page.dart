@@ -19,7 +19,7 @@ class BloodworkDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Bloodwork>(
+    return StreamBuilder<Bloodwork?>(
       stream: context.read<BloodworkService>().streamBloodwork(bloodworkId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

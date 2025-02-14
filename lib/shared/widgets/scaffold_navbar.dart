@@ -5,7 +5,6 @@ import 'package:bloodinsight/shared/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// Add this at the top of the file with other imports
 extension ScaffoldStateExtension on BuildContext {
   void hideBottomNav() {
     final scaffold = Scaffold.maybeOf(this);
@@ -32,7 +31,6 @@ class ScaffoldWithNavBar extends StatefulWidget {
     required this.navigationShell,
   });
 
-  // final Widget child;
   final StatefulNavigationShell navigationShell;
   static const FloatingActionButtonLocation centerDocked =
       _CenterDockedFloatingActionButtonLocation();

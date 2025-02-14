@@ -86,6 +86,13 @@ class AuthCubit extends Cubit<AuthState> {
           emit(SignedOutState(error: 'Google sign in was cancelled.'));
         case SignInResult.success:
           {
+            final profile =
+                await profileService.getProfile(authService.currentUser!.uid);
+            if (profile != null) {
+              emit(SignedInState(email: authService.userEmail));
+              return;
+            }
+
             await profileService.upsertProfile(
               authService.currentUser!.uid,
               UserProfile(

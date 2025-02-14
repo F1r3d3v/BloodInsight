@@ -1,4 +1,4 @@
-name: Setup Environment
+name: Setup environment
 description: Setup environment for Flutter project
 
 runs:

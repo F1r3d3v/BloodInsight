@@ -258,9 +258,9 @@ class DashboardPageState extends State<DashboardPage> {
                 ),
                 Sizes.kGap20,
 
-                StreamBuilder<List<Bloodwork>>(
+                StreamBuilder<Bloodwork?>(
                   stream:
-                      context.read<BloodworkService>().streamUserBloodwork(),
+                      context.read<BloodworkService>().streamLatestBloodwork(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return _buildCardPlaceholder();
@@ -277,7 +277,7 @@ class DashboardPageState extends State<DashboardPage> {
                     }
 
                     final bloodworks = snapshot.data;
-                    if (bloodworks == null || bloodworks.isEmpty) {
+                    if (bloodworks == null) {
                       return _buildCard(
                         context,
                         title: 'Latest Results Summary',
@@ -304,13 +304,10 @@ class DashboardPageState extends State<DashboardPage> {
                       );
                     }
 
-                    // Get the most recent bloodwork
-                    final latestBloodwork = bloodworks.first;
-                    final totalMarkers = latestBloodwork.markers.length;
-                    final outOfRangeMarkers =
-                        latestBloodwork.abnormalMarkers.length;
+                    final totalMarkers = bloodworks.markers.length;
+                    final outOfRangeMarkers = bloodworks.abnormalMarkers.length;
                     final daysAgo = DateTime.now()
-                        .difference(latestBloodwork.dateCollected)
+                        .difference(bloodworks.dateCollected)
                         .inDays;
 
                     return _buildCard(

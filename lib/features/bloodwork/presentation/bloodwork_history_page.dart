@@ -51,12 +51,15 @@ class BloodworkHistoryPage extends StatelessWidget {
 
               return GroupedListView<Bloodwork, DateTime>(
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding: Sizes.kPadd16,
+                padding:
+                    const EdgeInsets.only(left: 16, right: 16, bottom: 100),
                 elements: bloodworks,
                 groupBy: (bloodwork) => DateTime(
                   bloodwork.dateCollected.year,
                   bloodwork.dateCollected.month,
                 ),
+                itemComparator: (a, b) =>
+                    a.dateCollected.compareTo(b.dateCollected),
                 groupSeparatorBuilder: (date) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
