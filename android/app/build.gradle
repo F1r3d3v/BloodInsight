@@ -8,6 +8,10 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// flutter_env_native
+Project flutter_env_native = project(':flutter_env_native')
+apply from: "${flutter_env_native.projectDir}/envConfig.gradle"
+
 android {
     namespace = "com.example.blood_insight"
     compileSdk = flutter.compileSdkVersion
@@ -53,11 +57,6 @@ android {
 flutter {
     source = "../.."
 }
-
-// flutter_env_native
-Project flutter_env_native = project(':flutter_env_native')
-apply from: "${flutter_env_native.projectDir}/envConfig.gradle"
-
 
 dependencies {
     implementation 'androidx.window:window:1.0.0'

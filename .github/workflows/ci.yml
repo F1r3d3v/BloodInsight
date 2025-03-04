@@ -24,9 +24,6 @@ jobs:
         with:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
-          CACHE_NAME: Test
-          CACHE_PATHS: |
-            ~/.pub-cache
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -50,9 +47,8 @@ jobs:
         with:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
-          CACHE_NAME: Build
+          CACHE_NAME: gradle
           CACHE_PATHS: |
-            ~/.pub-cache
             ~/.gradle/caches
 
       - name: Build Android APK

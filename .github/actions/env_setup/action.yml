@@ -8,15 +8,12 @@ inputs:
   GEMINI_API:
     description: 'Gemini API key'
     required: true
-  CACHE_PATHS:
-    description: 'Paths to cache'
-    required: false
-    default: |
-      ~/.pub-cache
-      ~/.gradle/caches
   CACHE_NAME:
     description: 'Cache name'
-    required: true
+    required: false
+  CACHE_PATHS:
+    description: 'Paths to additional cache'
+    required: false
 
 runs:
   using: composite
@@ -33,14 +30,16 @@ runs:
         channel: "stable"
         flutter-version: 3.27.4
 
-    - name: Cache dependencies
-      id: cache-deps
+    - name: Cache pub dependencies
+      id: cache-pub-deps
       uses: actions/cache@v4
       with:
-        path: ${{ inputs.CACHE_PATHS }}
-        key: ${{ runner.os }}-${{ inputs.CACHE_NAME }}-${{ hashFiles('pubspec.lock') }}
+        path: |
+          ~/.pub-cache
+          .dart_tool
+        key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.lock') }}
         restore-keys: |
-          ${{ runner.os }}-${{ inputs.CACHE_NAME }}-
+          ${{ runner.os }}-pub-
 
     - name: Install dependencies
       run: flutter pub get
@@ -55,3 +54,13 @@ runs:
         echo "GOOGLE_MAPS_API=$GOOGLE_MAPS_API" >> .env
         echo "GEMINI_API=$GEMINI_API" >> .env
       shell: bash
+
+    - name: Cache additional dependencies
+      if: inputs.CACHE_NAME != '' && inputs.CACHE_PATHS != ''
+      id: cache-extra-deps
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.CACHE_PATHS }}
+        key: ${{ runner.os }}-${{ inputs.CACHE_NAME }}-${{ hashFiles('pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ inputs.CACHE_NAME }}-
