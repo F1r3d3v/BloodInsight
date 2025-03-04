@@ -1,13 +1,20 @@
 name: CI
 description: Continuous Integration for BloodInsight
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
 
 jobs:
   flutter_test:
     name: Run flutter test and analyze
     runs-on: ubuntu-latest
-    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,6 +24,9 @@ jobs:
         with:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
+          CACHE_NAME: Test
+          CACHE_PATHS: |
+            ~/.pub-cache
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -31,7 +41,6 @@ jobs:
     name: Build Android
     needs: flutter_test
     runs-on: ubuntu-latest
-    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,6 +50,10 @@ jobs:
         with:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
+          CACHE_NAME: Build
+          CACHE_PATHS: |
+            ~/.pub-cache
+            ~/.gradle/caches
 
       - name: Build Android APK
         run: flutter build apk --dart-define-from-file=.env

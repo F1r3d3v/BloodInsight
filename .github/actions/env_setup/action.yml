@@ -8,6 +8,15 @@ inputs:
   GEMINI_API:
     description: 'Gemini API key'
     required: true
+  CACHE_PATHS:
+    description: 'Paths to cache'
+    required: false
+    default: |
+      ~/.pub-cache
+      ~/.gradle/caches
+  CACHE_NAME:
+    description: 'Cache name'
+    required: true
 
 runs:
   using: composite
@@ -28,12 +37,10 @@ runs:
       id: cache-deps
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.pub-cache
-          ~/.gradle/caches
-        key: ${{ runner.os }}-pub-gradle-${{ hashFiles('pubspec.lock') }}
+        path: ${{ inputs.CACHE_PATHS }}
+        key: ${{ runner.os }}-${{ inputs.CACHE_NAME }}-${{ hashFiles('pubspec.lock') }}
         restore-keys: |
-          ${{ runner.os }}-pub-gradle-
+          ${{ runner.os }}-${{ inputs.CACHE_NAME }}-
 
     - name: Install dependencies
       run: flutter pub get
