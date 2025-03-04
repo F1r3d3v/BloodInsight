@@ -1,14 +1,13 @@
 name: CI
-on:
-  pull_request:
-    branches:
-      - master
-      - dev
+description: Continuous Integration for BloodInsight
+
+on: [push, pull_request]
 
 jobs:
   flutter_test:
     name: Run flutter test and analyze
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,13 +22,13 @@ jobs:
         run: flutter analyze --fatal-warnings
 
       - name: Run tests
-        run: flutter test
+        run: flutter test --dart-define-from-file=.env
 
   flutter_build_android:
     name: Build Android
     needs: flutter_test
     runs-on: ubuntu-latest
-
+    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,7 +37,7 @@ jobs:
         uses: ./.github/actions/env_setup
 
       - name: Build Android APK
-        run: flutter build apk
+        run: flutter build apk --dart-define-from-file=.env
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -48,7 +47,7 @@ jobs:
           if-no-files-found: error
 
       - name: Build Android App Bundle
-        run: flutter build appbundle
+        run: flutter build appbundle --dart-define-from-file=.env
 
       - name: Upload Bundle Artifact
         uses: actions/upload-artifact@v4

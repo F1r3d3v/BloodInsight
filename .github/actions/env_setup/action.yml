@@ -16,6 +16,27 @@ runs:
         channel: "stable"
         flutter-version: 3.27.4
 
+    - name: Cache dependencies
+      id: cache-deps
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pub-cache
+          ~/.gradle/caches
+        key: ${{ runner.os }}-pub-gradle-${{ hashFiles('pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pub-gradle-
+
     - name: Install dependencies
       run: flutter pub get
+      shell: bash
+
+    - name: Create .env file
+      env:
+        GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
+        GEMINI_API: ${{ secrets.GEMINI_API }}
+      run: |
+        touch .env
+        echo "GOOGLE_MAPS_API=$GOOGLE_MAPS_API" >> .env
+        echo "GEMINI_API=$GEMINI_API" >> .env
       shell: bash
