@@ -47,9 +47,6 @@ jobs:
         with:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
-          CACHE_NAME: gradle
-          CACHE_PATHS: |
-            ~/.gradle/caches
 
       - name: Build Android APK
         run: flutter build apk --dart-define-from-file=.env
