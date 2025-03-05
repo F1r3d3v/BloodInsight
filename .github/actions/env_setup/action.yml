@@ -20,7 +20,9 @@ runs:
         cache: gradle
 
     - name: Fix sdkmanager path
-      run: ln -s /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager /usr/local/lib/android/sdk/tools/bin/sdkmanager
+      run: |
+        mkdir -p /usr/local/lib/android/sdk/tools/bin
+        ln -s /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager /usr/local/lib/android/sdk/tools/bin/sdkmanager
       shell: bash
 
     - name: Setup Android SDK
