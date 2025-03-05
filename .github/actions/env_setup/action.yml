@@ -15,21 +15,23 @@ runs:
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
-        java-version: 17
-        distribution: temurin
-        cache: gradle
+        distribution: 'zulu'
+        java-version: 11
+        cache: 'gradle'
 
-    - name: Setup Android cmdline tools
-      uses: android-actions/setup-android@v3
-      with:
-        log-accepted-android-sdk-licenses: false
+    # - name: Setup Android cmdline tools
+    #   uses: android-actions/setup-android@v3
+    #   with:
+    #     log-accepted-android-sdk-licenses: false
 
     - name: Setup Android SDK
       uses: maxim-lobanov/setup-android-tools@v1
       with:
         packages: |
-          platforms;android-31
-          ndk;27.0.12077973
+          platform-tools
+          platforms;android-30
+          build-tools;30.0.2
+          ndk;22.1.7171670
         cache: true
 
     - name: Set up Flutter
