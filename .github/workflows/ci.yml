@@ -48,6 +48,14 @@ jobs:
           GOOGLE_MAPS_API: ${{ secrets.GOOGLE_MAPS_API }}
           GEMINI_API: ${{ secrets.GEMINI_API }}
 
+      - name: Cache Android SDK
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/lib/android/sdk
+          key: android-sdk-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}
+          restore-keys: |
+            android-sdk-${{ runner.os }}-
+
       - name: Build Android APK
         run: flutter build apk --dart-define-from-file=.env
 
