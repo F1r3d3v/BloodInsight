@@ -44,6 +44,7 @@ dependencies:
 dev_dependencies:
   bloc_test: ^10.0.0
   build_runner: ^2.4.6
+  flutter_env_native: ^0.1.0
   flutter_test:
     sdk: flutter
   leancode_lint: ^14.2.0

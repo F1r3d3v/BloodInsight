@@ -1,3 +1,4 @@
+import 'package:bloodinsight/core/config/environment.dart';
 import 'package:bloodinsight/core/config/routes.dart';
 import 'package:bloodinsight/core/connectivity_status.dart';
 import 'package:bloodinsight/core/gemini_api.dart';
@@ -101,10 +102,7 @@ class MainApp extends StatelessWidget {
         ),
         Provider(
           create: (context) => InsightsService(
-            gemini: GeminiAPI(
-              apiKey:
-                  'AIzaSyCNBGDIoq7oQ5I6bSnsf6htEwy0W3u-pIY', // Only for testing, should load from .env
-            ), // TODO: Use backend in production
+            gemini: GeminiAPI(apiKey: Environment.geminiAPI),
             bloodworkService: context.read(),
             profileService: context.read(),
             auth: context.read(),
