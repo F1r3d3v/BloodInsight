@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "298361829564",
+    "project_id": "bloodinsight-f1r3d3v",
+    "storage_bucket": "bloodinsight-f1r3d3v.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298361829564:android:b39007a2b3e166d8fbf8b9",
+        "android_client_info": {
+          "package_name": "com.bloodinsight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298361829564-2j924gfb7aa6oframqsagf667ht9gvr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKlHUUTubY5zFOD26rIPALDm5cG1j7ejM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298361829564-2j924gfb7aa6oframqsagf667ht9gvr1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "298361829564-h5cm99aip2d5g6dhhctvsb9k5gpgs5ko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bloodinsight"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
