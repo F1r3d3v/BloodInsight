@@ -24,6 +24,7 @@ runs:
 
     - name: Run SDK Manager
       run: sdkmanager --list
+      shell: bash
 
     # - name: Setup Android SDK
     #   uses: maxim-lobanov/setup-android-tools@v1
