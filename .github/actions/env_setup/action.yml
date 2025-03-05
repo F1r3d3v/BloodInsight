@@ -1,6 +1,14 @@
 name: Setup environment
 description: Setup environment for Flutter project
 
+inputs:
+  GOOGLE_MAPS_API:
+    description: 'Google Maps API key'
+    required: true
+  GEMINI_API:
+    description: 'Gemini API key'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -9,13 +17,42 @@ runs:
       with:
         distribution: "zulu"
         java-version: "21.x"
+        cache: gradle
+
+    - name: Fix sdkmanager path
+      run: |
+        mkdir -p /usr/local/lib/android/sdk/tools/bin
+        ln -s /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager /usr/local/lib/android/sdk/tools/bin/sdkmanager
+      shell: bash
+
+    - name: Setup Android SDK
+      uses: maxim-lobanov/setup-android-tools@v1
+      with:
+        packages: |
+          platforms;android-31
+          ndk;27.0.12077973
+        cache: true
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        channel: "stable"
         flutter-version: 3.27.4
+        channel: "stable"
+        cache: true
+        cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+        cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+        architecture: x64
 
     - name: Install dependencies
       run: flutter pub get
+      shell: bash
+
+    - name: Create .env file
+      env:
+        GOOGLE_MAPS_API: ${{ inputs.GOOGLE_MAPS_API }}
+        GEMINI_API: ${{ inputs.GEMINI_API }}
+      run: |
+        touch .env
+        echo "GOOGLE_MAPS_API=$GOOGLE_MAPS_API" >> .env
+        echo "GEMINI_API=$GEMINI_API" >> .env
       shell: bash

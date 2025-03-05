@@ -1,12 +1,12 @@
 import 'dart:math';
 
+import 'package:bloodinsight/core/config/environment.dart';
 import 'package:bloodinsight/features/map/data/facility_model.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FacilityService {
-  final places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyB7q0N7N7GuQDCx4mQTzJT_LfOvhsqcyYQ');
+  final places = GoogleMapsPlaces(apiKey: Environment.googleMapsAPI);
 
   Future<List<MedicalFacility>> searchNearbyFacilities(
     LatLng location, {
