@@ -22,11 +22,14 @@ runs:
     - name: Setup Android cmdline tools
       uses: android-actions/setup-android@v3
 
-    - name: Setup Android SDK
-      uses: maxim-lobanov/setup-android-tools@v1
-      with:
-        packages: platforms;android-31
-        cache: true
+    - name: Run SDK Manager
+      run: sdkmanager --list
+
+    # - name: Setup Android SDK
+    #   uses: maxim-lobanov/setup-android-tools@v1
+    #   with:
+    #     packages: platforms;android-31
+    #     cache: true
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
