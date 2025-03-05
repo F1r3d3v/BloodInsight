@@ -1,4 +1,6 @@
-# 🩸 BloodInsight - Bloodwork Monitoring Application
+# 🩸 BloodInsight - Bloodwork Monitoring App
+
+![BloodInsight Banner](assets/preview/Thumbnail.png)
 
 ## 🌟 Overview
 
@@ -26,3 +28,37 @@ BloodInsight is an intuitive and powerful application designed to help users tra
 2. **Sign In** – Use your preferred authentication method for secure access.
 3. **Import Your Data** – Upload your bloodwork records to start analyzing.
 4. **Explore & Monitor** – View detailed insights, set reminders, and take control of your health.
+
+## 🏗️ Running Locally
+
+To run BloodInsight on your local machine for testing or development, follow these steps:
+
+### 📋 Prerequisites
+
+Before you begin to install and test BloodInsight on your local machine, make sure you have met the following requirements:
+
+- 🔧 You have installed the latest version of Flutter SDK. [Install Flutter](https://docs.flutter.dev/get-started/install)
+- 🤖 You have installed Android Studio and optionally set up an emulator. [Download Android Studio](https://developer.android.com/studio)
+
+### 🔑 Environment Variables
+
+Create a \`.env\` file in the root directory of the project with the following content:
+
+```
+GOOGLE_MAPS_API=<your_google_maps_api_key>
+GEMINI_API=<your_gemini_api_key>
+```
+
+> [!IMPORTANT]
+> Replace `<your_google_maps_api_key>` and `<your_gemini_api_key>` with your actual API keys obtained from Google Maps and Gemini services. Keep your `.env` file secure and do not commit it to version control.
+
+### 🚀 Run
+
+1. 📦 Restore the packages:
+   ```
+   flutter pub get
+   ```
+2. 🏃 Run the application:
+   ```
+   flutter run --dart-define-from-file=.env
+   ```
