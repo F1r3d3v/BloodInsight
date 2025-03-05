@@ -23,8 +23,6 @@ runs:
       uses: maxim-lobanov/setup-android-tools@v1
       with:
         packages: |
-          "platform-tools"
-          "build-tools;31.0.0"
           "platforms;android-31"
           "ndk;27.0.12077973"
         cache: true
