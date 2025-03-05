@@ -2,10 +2,6 @@ name: CI
 description: Continuous Integration for BloodInsight
 
 on:
-  push:
-    branches:
-      - master
-      - dev
   pull_request:
     branches:
       - master
