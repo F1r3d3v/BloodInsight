@@ -1,6 +1,6 @@
 # 🩸 BloodInsight - Bloodwork Monitoring App
 
-![BloodInsight Banner](assets/preview/Thumbnail.png)
+![BloodInsight Banner](https://github.com/user-attachments/assets/e7fc0e4c-9354-45bc-aaa4-1e8228847484)
 
 ## 🌟 Overview
 
